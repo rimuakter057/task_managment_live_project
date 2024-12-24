@@ -11,6 +11,7 @@ class EmailVerificationScreen extends StatefulWidget {
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +26,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               Text("Learn With Ostad Platform",style: head2TextStyle(context:context),),
               const SizedBox(height: 10,),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Old Password',
                 ),
               ),

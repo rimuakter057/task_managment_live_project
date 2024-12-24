@@ -18,7 +18,7 @@ TextStyle headTextStyle({textColor}) {
 TextStyle head2TextStyle({context}) {
   return TextStyle(
     color: AppColors.black.withOpacity(.3),
-    fontSize: MediaQuery.sizeOf(context).height*.025,
+    fontSize: MediaQuery.sizeOf(context).height*.02,
     fontWeight: FontWeight.w400,
     fontFamily: 'Poppins',
   );
@@ -50,6 +50,15 @@ ButtonStyle appButtonStyle() {
 return ElevatedButton.styleFrom(
   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
   backgroundColor: AppColors.primaryColor,
+fixedSize:const Size.fromWidth(double .maxFinite),
+
+  padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 16),
+  foregroundColor: AppColors.white,
+  textStyle: TextStyle(
+    fontSize: 20,
+    fontFamily: 'poppins',
+    fontWeight: FontWeight.w500
+  )
 );
 }
 
