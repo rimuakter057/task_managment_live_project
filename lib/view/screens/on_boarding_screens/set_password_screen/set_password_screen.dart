@@ -86,9 +86,8 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     );
   }
   // dispose
-  @override
+/*  @override
   void dispose() {
     _emailController.dispose();
-
-  }
+  }*/
 }

@@ -35,11 +35,13 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
           const SizedBox(height: 15),
           const SizedBox(height: 20,),
           PinCodeTextField(
+            keyboardType: TextInputType.number,
             length: 6,
             pinTheme: appPinTheme(),
             obscureText: false,
+            backgroundColor: Colors.transparent,
             animationType: AnimationType.fade,
-            animationDuration: Duration(milliseconds: 300),
+            animationDuration: const Duration(seconds: 8),
             appContext: context,
             onChanged: (value){},
             onCompleted: (value){},
@@ -47,6 +49,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
           const SizedBox(height: 40,),
           ElevatedButton(
             onPressed: () {
+              print("success");
               Navigator.pushNamed(context, SetPasswordScreen.routeName);
             },
             child: const Text(
@@ -75,7 +78,8 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
               color: AppColors.primaryColor,
             ),
             recognizer: TapGestureRecognizer()..onTap = (){
-              Navigator.pop(context);
+              print("Success");
+              //Navigator.pop(context);
             },
           ),
         ]

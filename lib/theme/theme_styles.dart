@@ -6,7 +6,6 @@ ThemeData theme = ThemeData(
   colorSchemeSeed:AppColors.primaryColor,
 inputDecorationTheme: InputDecorationTheme(
   filled: true,
-
   fillColor: Colors.blueGrey.shade50,
   border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
@@ -38,7 +37,6 @@ inputDecorationTheme: InputDecorationTheme(
   textTheme: TextTheme(
     titleLarge: TextStyle(
       color: AppColors.black,
-      fontSize: 24,
       fontWeight: FontWeight.w600,
       fontFamily: 'Poppins',
     ),
@@ -51,6 +49,11 @@ inputDecorationTheme: InputDecorationTheme(
         fontSize: 14,
         color: AppColors.black
     ),
+    titleSmall: TextStyle(
+      color: Colors.grey,
+      fontWeight: FontWeight.w500,
+    ),
+
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(

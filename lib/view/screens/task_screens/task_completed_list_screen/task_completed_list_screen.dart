@@ -11,6 +11,8 @@ class TaskCompletedListScreen extends StatefulWidget {
 class _TaskCompletedListScreenState extends State<TaskCompletedListScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(child: Text("Task Completed List Screen")),
+    );
   }
 }

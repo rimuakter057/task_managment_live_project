@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_management_live_project/utils/colors.dart';
+import 'package:task_management_live_project/view/screens/task_screens/nav_screen/nav_screen.dart';
 
 import '../../../../utils/styles.dart';
 import '../Signup_screen/signup_screen.dart';
@@ -65,7 +66,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 50,
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, NavScreen.routeName);
+                    },
                     child: const Text(
                       "Sign In",
                     ),

@@ -12,6 +12,8 @@ class TaskCancelListScreen extends StatefulWidget {
 class _TaskCancelListScreenState extends State<TaskCancelListScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(child: Text("Task Cancel List Screen")),
+    );
   }
 }

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:task_management_live_project/theme/theme_styles.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/Signup_screen/signup_screen.dart';
-import 'package:task_management_live_project/view/screens/on_boarding_screens/email_verification/email_verification_screen.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/forget_email_verify_screen/forget_email_verify_screen.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/pin_verification_screen/pin_verification_screen.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/set_password_screen/set_password_screen.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/signIn_screen/signIn_screen.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/splash_screen.dart';
+import 'package:task_management_live_project/view/screens/profile_screens/profile_update_screen/profile_update.dart';
+import 'package:task_management_live_project/view/screens/task_screens/nav_screen/nav_screen.dart';
+import 'package:task_management_live_project/view/screens/task_screens/new_task_list_screen/new_task_list_screen.dart';
 
 class TaskManagement extends StatelessWidget {
   const TaskManagement({super.key});
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,27 +22,39 @@ class TaskManagement extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings) {
         late Widget widget;
         if (settings.name == SplashScreen.routeName) {
-          widget = SplashScreen();
-        } else if (settings.name == SignInScreen.routeName) {
-          widget = SignInScreen();
-        } else if (settings.name == SignUpScreen.routeName) {
-          widget = SignUpScreen();
-        } else if (settings.name == ForgetEmailVerifyScreen.routeName) {
-          widget = ForgetEmailVerifyScreen();
-        } else if (settings.name == PinVerificationScreen.routeName) {
-          widget = PinVerificationScreen();
-        } else if (settings.name == SetPasswordScreen.routeName) {
-          widget = SetPasswordScreen();
-        } else if (settings.name == EmailVerificationScreen.routeName) {
-          widget = EmailVerificationScreen();
-        } else {
-          widget = SplashScreen(); // Default fallback route
+          widget = const SplashScreen();
         }
+        else if (settings.name == SignInScreen.routeName) {
+          widget = const SignInScreen();
+        } else if (settings.name == SignUpScreen.routeName) {
+          widget = const SignUpScreen();
+        } else if (settings.name ==ForgetEmailVerifyScreen.routeName) {
+          widget = const ForgetEmailVerifyScreen();
+        } else if (settings.name ==  PinVerificationScreen.routeName) {
+          widget = const PinVerificationScreen();
+        } else if (settings.name == SetPasswordScreen.routeName) {
+          widget = const  SetPasswordScreen();
+        } else if (settings.name == NavScreen.routeName) {
+          widget = const NavScreen();
+        } else if (settings.name == NewTaskListScreen.routeName) {
+          widget = const NewTaskListScreen();
+        } else if (settings.name == ProfileUpdate.routeName) {
+          widget = const ProfileUpdate();
+        } else {
+          // ডিফল্ট উইজেট যখন কোনো রুট মিলবে না
+          widget = const Scaffold(
+            body: Center(
+              child: Text("Page not found"),
+            ),
+          );
+        }
+
         return MaterialPageRoute(builder: (context) => widget);
       },
     );
   }
 }
+
 
 
 

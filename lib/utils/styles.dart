@@ -102,7 +102,10 @@ void showError(String message) {
 
 PinTheme appPinTheme() {
   return PinTheme(
-    selectedColor: AppColors.primaryColor,
-    inactiveColor: AppColors.white,
+    errorBorderColor: AppColors.black,
+    inactiveColor: AppColors.primaryColor,
+    activeColor: AppColors.white,
+    shape: PinCodeFieldShape.box,
+    borderRadius: BorderRadius.circular(5),
   );
 }
