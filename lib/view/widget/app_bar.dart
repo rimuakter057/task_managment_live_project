@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:task_management_live_project/view/screens/profile_screens/profile_update_screen/profile_update.dart';
 
 import '../../utils/colors.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({
     super.key,
-    required this.textTheme,
+  this.fromUpdateProfile=false
   });
 
-  final TextTheme textTheme;
+  final bool fromUpdateProfile;
+
 
   @override
   Widget build(BuildContext context) {
+    final  textTheme= Theme.of(context).textTheme;
     return AppBar(
       backgroundColor: AppColors.primaryColor,
       title: Row(
@@ -21,10 +24,18 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             backgroundColor: AppColors.white,
           ),
           Expanded(
-            child: Column(children: [
-              Text("Ostad",style:textTheme.titleLarge?.copyWith(color: AppColors.white) ,),
-              Text("ostad-batch eight",style:textTheme.bodySmall?.copyWith(color: AppColors.white) ,),
-            ],),
+            child: GestureDetector(
+              onTap: (){
+                if( fromUpdateProfile==false ){
+                  Navigator.pushNamed(context,ProfileUpdate.routeName);
+                }
+
+              },
+              child: Column(children: [
+                Text("Ostad",style:textTheme.titleLarge?.copyWith(color: AppColors.white) ,),
+                Text("ostad-batch eight",style:textTheme.bodySmall?.copyWith(color: AppColors.white) ,),
+              ],),
+            ),
           ),
           IconButton(onPressed: (){},
               icon:Icon(Icons.logout,color: AppColors.white,) ),
@@ -35,5 +46,5 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => throw UnimplementedError();
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

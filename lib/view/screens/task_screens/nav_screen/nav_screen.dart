@@ -1,10 +1,9 @@
 
 import 'package:flutter/material.dart';
-
+import '../add_new_task_screen/add_new_task_screen.dart';
 import '../new_task_list_screen/new_task_list_screen.dart';
 import '../task_cancel_list_screen/task_cancel_list_screen.dart';
 import '../task_completed_list_screen/task_completed_list_screen.dart';
-import '../task_create_screen/task_create_screen.dart';
 import '../task_progress_list_screen/task_progress_list_screen.dart';
 
 class NavScreen extends StatefulWidget {
@@ -21,7 +20,7 @@ class _NavScreenState extends State<NavScreen> {
   List <Widget>_screens=[
     NewTaskListScreen(),
     TaskCompletedListScreen(),
-    TaskCreateScreen(),
+    AddNewTaskScreen(),
     TaskProgressListScreen(),
     TaskCancelListScreen(),
   ];

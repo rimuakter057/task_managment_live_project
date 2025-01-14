@@ -1,9 +1,13 @@
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_management_live_project/data/service/network_caller.dart';
 import 'package:task_management_live_project/utils/colors.dart';
 import 'package:task_management_live_project/view/screens/task_screens/nav_screen/nav_screen.dart';
 
 import '../../../../utils/styles.dart';
+import '../../../../utils/url.dart';
+import '../../../widget/snack_bar_message.dart';
 import '../Signup_screen/signup_screen.dart';
 import '../forget_email_verify_screen/forget_email_verify_screen.dart';
 
@@ -20,6 +24,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _signInProgress = false;
   @override
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.titleLarge;
@@ -28,69 +33,135 @@ class _SignInScreenState extends State<SignInScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Get Started With",
-                  style:titleStyle,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Get Started With",
+                style:titleStyle,
+              ),
+              Text(
+                "Learn With Ostad Platform",
+                style: head2TextStyle(context: context),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              _buildTextForm(context),
+              const SizedBox(
+                height: 10,
+              ),
+              TextButton(onPressed: (){
+                Navigator.pushNamed(context, ForgetEmailVerifyScreen.routeName);
+              },
+                child: Text("Forgot Password?",style: bodySmallStyle
                 ),
-                Text(
-                  "Learn With Ostad Platform",
-                  style: head2TextStyle(context: context),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    hintText: 'Email',
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  obscureText: true,
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    hintText: 'Password',
-                  ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, NavScreen.routeName);
-                    },
-                    child: const Text(
-                      "Sign In",
-                    ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextButton(onPressed: (){
-                  Navigator.pushNamed(context, ForgetEmailVerifyScreen.routeName);
-                },
-                  child: Text("Forgot Password?",style: bodySmallStyle
-                  ),
-                ),
-                buildSignUpSection(),
-              ],
-            ),
+              ),
+              _buildSignUpTextSection(),
+            ],
           ),
         ),
       ),
     );
   }
-  RichText buildSignUpSection() {
+
+// sign in on tap
+  void _signInOnTap(){
+    if(_formKey.currentState!.validate()){
+      _signInUser();
+      debugPrint("success");
+
+    }
+  }
+
+  // sign api function
+  Future <void> _signInUser()async{
+    _signInProgress==true;
+    setState(() {
+
+    });
+    //add body
+    Map<String,dynamic> requestBody = {
+        "email":_emailController.text.trim(),
+        "password":_passwordController.text.trim()
+    };
+    // api intention
+ final NetworkResponse response = await NetworkCaller.postRequest(
+     body: requestBody, url: Urls.signIn);
+    if (response.isSuccess) {
+      Navigator.pushReplacementNamed(context, NavScreen.routeName);
+    }else{
+      _signInProgress = false;
+      setState(() {
+
+      });
+      return showSnackBar(response.errorMessage, context);
+    }
+  }
+
+  //clear text field
+  void _clearTextField(){
+    _emailController.clear();
+    _passwordController.clear();
+  }
+  //sign in form
+  Form _buildTextForm(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            controller: _emailController,
+            decoration: const InputDecoration(
+              hintText: 'Email',
+            ),
+            validator: (String? value) {
+              if(value?.trim().isEmpty??true){
+                return "email can't be empty";
+              }return null;
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            obscureText: true,
+            controller: _passwordController,
+            decoration: const InputDecoration(
+              hintText: 'Password',
+            ),
+            validator: (String? value) {
+              if(value?.trim().isEmpty??true){
+                return "password can't be empty";
+              }if(value!.length<6){
+                return "password must be at least 6 characters";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Visibility(
+            visible: _signInProgress==false,
+            replacement: Center(child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            ),),
+            child: ElevatedButton(
+              onPressed: _signInOnTap,
+              child: const Text(
+                "Sign In",
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  //sign up text section
+  RichText _buildSignUpTextSection() {
     return RichText(text: TextSpan(
               text: "you don't have an account?",
                 style:Theme.of(context).textTheme.bodySmall,
@@ -108,6 +179,7 @@ class _SignInScreenState extends State<SignInScreen> {
     ),
     );
   }
+  //dispose
   @override
   void dispose() {
     _emailController.dispose();

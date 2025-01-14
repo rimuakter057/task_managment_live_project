@@ -18,7 +18,7 @@ class TaskManagement extends StatelessWidget {
     return MaterialApp(
       theme: theme,
       debugShowCheckedModeBanner: false,
-      initialRoute: SplashScreen.routeName,
+      initialRoute: SignInScreen.routeName,
       onGenerateRoute: (RouteSettings settings) {
         late Widget widget;
         if (settings.name == SplashScreen.routeName) {
