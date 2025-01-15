@@ -19,11 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      nextScreen(context);
-    });
+ nextScreen();
   }
-  Future<void> nextScreen(BuildContext context) async {
+  Future<void> nextScreen() async {
     await Future.delayed(const Duration(seconds: 3));
     bool isUserLoggedIn = await AuthController.isUserLoggedIn();
     if (isUserLoggedIn) {

@@ -149,7 +149,7 @@ class _SignInScreenState extends State<SignInScreen> {
         String token= response.responseData!['token'];
  UserModel userModel= UserModel.fromJson(response.responseData!['data']);
 await AuthController.saveUserData(token, userModel);
-      Navigator.pushReplacementNamed(context, NavScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil( context, NavScreen.routeName,(protected)=>false);
     }else{
       _signInProgress = false;
       setState(() {

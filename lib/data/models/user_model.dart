@@ -7,6 +7,11 @@ class UserModel {
   String? mobile;
   String? password;
 
+  // create own property
+  String get fullName {
+    return '$firstName $lastName';
+  }
+
   UserModel(
       {this.email, this.firstName, this.lastName, this.mobile, this.password});
 

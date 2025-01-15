@@ -13,25 +13,74 @@ class AuthController {
 
   static const String _accessTokenKey = 'access-token';
   static const String _userDataKey = 'user-data';
-
-  static Future<void> saveUserData(String accessToken, UserModel model) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('access-token', accessToken);
-    sharedPreferences.setString('user-data', jsonEncode(model.toJson()));
-
+// save function
+  static Future<void> saveUserData(String token, UserModel model)async{
+ SharedPreferences sharedPreferences =   await SharedPreferences.getInstance();
+ sharedPreferences.setString(_accessTokenKey,token);
+ sharedPreferences.setString(_userDataKey, jsonEncode(model.toJson()));
   }
 
+  // get user data
+  static Future<void> getUserData() async {
+ SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+ String? token = sharedPreferences.getString(_accessTokenKey);
+ String? userData = sharedPreferences.getString(_userDataKey);
+accessToken = token;
+userModel =UserModel.fromJson(jsonDecode(userData!));
+  }
+
+  // save data
   static Future<bool> isUserLoggedIn() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? accessToken =  sharedPreferences.getString('access-token', );
-    return accessToken != null;
-
-
+    String? token =  sharedPreferences.getString(_accessTokenKey, );
+   if ( token != null){
+     await getUserData();
+     return true;
+   }else{
+     return false;
+   }
   }
 
-  static Future<void> getUserData() async {
 
+
+
+
+
+
+
+/*  static Future<void> saveUserData(String token, UserModel model) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString(_accessTokenKey, token);
+    sharedPreferences.setString(_userDataKey, jsonEncode(model.toJson()));
+    accessToken = token;
+    userModel = model;
+  }*/
+/*
+  static Future<void> saveUserData(String token, UserModel model) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString(_accessTokenKey, token);
+    await sharedPreferences.setString(_userDataKey, jsonEncode(model.toJson()));
+    accessToken = token;
+    userModel = model;
   }
+*/
+
+/*  static Future<bool> isUserLoggedIn() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString(_accessTokenKey);
+    if (token != null) {
+      await getUserData();
+      return true;
+    }
+    return false;
+  }*/
+
+
+
+
+
+
+
 
 
   }
