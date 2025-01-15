@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:task_management_live_project/data/service/network_caller.dart';
 import 'package:task_management_live_project/utils/colors.dart';
 import 'package:task_management_live_project/view/screens/task_screens/nav_screen/nav_screen.dart';
-
+import '../../../../controllers/auth_controller.dart';
+import '../../../../data/models/user_model.dart';
 import '../../../../utils/styles.dart';
 import '../../../../utils/url.dart';
 import '../../../widget/snack_bar_message.dart';
@@ -71,39 +72,9 @@ class _SignInScreenState extends State<SignInScreen> {
     if(_formKey.currentState!.validate()){
       _signInUser();
       debugPrint("success");
-
-    }
-  }
-
-  // sign api function
-  Future <void> _signInUser()async{
-    _signInProgress==true;
-    setState(() {
-
-    });
-    //add body
-    Map<String,dynamic> requestBody = {
-        "email":_emailController.text.trim(),
-        "password":_passwordController.text.trim()
-    };
-    // api intention
- final NetworkResponse response = await NetworkCaller.postRequest(
-     body: requestBody, url: Urls.signIn);
-    if (response.isSuccess) {
-      Navigator.pushReplacementNamed(context, NavScreen.routeName);
     }else{
-      _signInProgress = false;
-      setState(() {
-
-      });
-      return showSnackBar(response.errorMessage, context);
+      print("error message");
     }
-  }
-
-  //clear text field
-  void _clearTextField(){
-    _emailController.clear();
-    _passwordController.clear();
   }
   //sign in form
   Form _buildTextForm(BuildContext context) {
@@ -160,6 +131,43 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+  // sign api function
+  Future <void> _signInUser()async{
+    _signInProgress==true;
+    setState(() {
+
+    });
+    //add body
+    Map<String,dynamic> requestBody = {
+        "email":_emailController.text.trim(),
+        "password":_passwordController.text.trim()
+    };
+    // api intention
+ final NetworkResponse response = await NetworkCaller.postRequest(
+     body: requestBody, url: Urls.signIn);
+ if (response.isSuccess) {
+        String token= response.responseData!['token'];
+ UserModel userModel= UserModel.fromJson(response.responseData!['data']);
+await AuthController.saveUserData(token, userModel);
+      Navigator.pushReplacementNamed(context, NavScreen.routeName);
+    }else{
+      _signInProgress = false;
+      setState(() {
+
+      });
+      if(response.statusCode==401){
+        return showSnackBar("Invalid email or password", context);
+      }
+      return showSnackBar(response.errorMessage, context);
+    }
+  }
+
+  //clear text field
+  void _clearTextField(){
+    _emailController.clear();
+    _passwordController.clear();
+  }
+
   //sign up text section
   RichText _buildSignUpTextSection() {
     return RichText(text: TextSpan(

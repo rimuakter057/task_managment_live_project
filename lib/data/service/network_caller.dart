@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
@@ -49,22 +48,33 @@ static  Future <NetworkResponse> getRequest({required Map<String,dynamic> params
 static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,required String url})async{
     try{ Uri uri= Uri.parse(url);
       debugPrint("Uri = $url");
-    //debugPrint("Uri = $body");
     Response response =await post(uri,
         headers: {'content-type': 'application/json'},
         body:jsonEncode(body) );
     if (response.statusCode==200){
-      debugPrint("status = ${response.statusCode}");
+      // ata print hoy
+      debugPrint("status code = ${response.statusCode}");
       final decodedData= jsonDecode(response.body);
+      debugPrint(decodedData.toString());
       return NetworkResponse(
         isSuccess: true,
         statusCode: response.statusCode,
         responseData: decodedData,);
-    } else {
+    }
+    if(response.statusCode == 401){
+      return NetworkResponse(statusCode: response.statusCode,
+          isSuccess:false,
+          errorMessage: "Unauthorized");
+    }  if(response.statusCode == 400){
+      return NetworkResponse(statusCode: response.statusCode,
+          isSuccess:false,
+          errorMessage: "bad request");
+    }
+    else {
       return NetworkResponse(
         isSuccess: true,
         statusCode: response.statusCode,
-        // responseData: decodedData,   akhane decoded data keno ney ni
+
       );
     }
     }catch(e){
@@ -73,6 +83,4 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
           errorMessage: e.toString());
     }
   }
-
-
 }

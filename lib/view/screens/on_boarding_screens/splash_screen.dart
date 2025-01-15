@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/signIn_screen/signIn_screen.dart';
+import '../../../controllers/auth_controller.dart';
 import '../../widget/app_logo.dart';
 import '../../widget/screen_background.dart';
+import '../task_screens/nav_screen/nav_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,7 +25,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   Future<void> nextScreen(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 3));
-    Navigator.pushReplacementNamed(context, SignInScreen.routeName);
+    bool isUserLoggedIn = await AuthController.isUserLoggedIn();
+    if (isUserLoggedIn) {
+      Navigator.pushReplacementNamed(context, NavScreen.routeName);
+    }else{
+      Navigator.pushReplacementNamed(context, SignInScreen.routeName);
+    }
+
   }
 
 
@@ -32,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body:ScreenBackground(
         child:Center(
-          child: AppLogo(),
+          child: Text("TASK MANAGEMENT"),
         ) ,
         
       )
