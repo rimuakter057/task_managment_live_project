@@ -13,6 +13,7 @@ class AuthController {
 
   static const String _accessTokenKey = 'access-token';
   static const String _userDataKey = 'user-data';
+
 // save function
   static Future<void> saveUserData(String token, UserModel model)async{
  SharedPreferences sharedPreferences =   await SharedPreferences.getInstance();
@@ -41,50 +42,11 @@ userModel =UserModel.fromJson(jsonDecode(userData!));
    }
   }
 
-
-
-
-
-
-
-
-/*  static Future<void> saveUserData(String token, UserModel model) async {
+// logout
+  static Future<void> clearUserData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString(_accessTokenKey, token);
-    sharedPreferences.setString(_userDataKey, jsonEncode(model.toJson()));
-    accessToken = token;
-    userModel = model;
-  }*/
-/*
-  static Future<void> saveUserData(String token, UserModel model) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString(_accessTokenKey, token);
-    await sharedPreferences.setString(_userDataKey, jsonEncode(model.toJson()));
-    accessToken = token;
-    userModel = model;
+    await sharedPreferences.clear();
   }
-*/
-
-/*  static Future<bool> isUserLoggedIn() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? token = sharedPreferences.getString(_accessTokenKey);
-    if (token != null) {
-      await getUserData();
-      return true;
-    }
-    return false;
-  }*/
-
-
-
-
-
-
-
 
 
   }
-
-  Future<void> clearUserData() async {
-
-}

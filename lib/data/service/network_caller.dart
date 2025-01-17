@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
+import '../../controllers/auth_controller.dart';
+
 
 class NetworkResponse{
   final int statusCode;
@@ -19,10 +21,10 @@ NetworkResponse({required this.statusCode,
 class NetworkCaller{
 //get request
 // Map <String,dynamic> kno
-static  Future <NetworkResponse> getRequest({required Map<String,dynamic> params,required String url})async{
+static  Future <NetworkResponse> getRequest({required String url})async{
  try{ Uri uri= Uri.parse(url);
  debugPrint("Uri = $url");
-    Response response =await get(uri);
+    Response response =await get(uri,headers: {'token':AuthController.accessToken??''});
     if (response.statusCode==200){
       debugPrint("status = ${response.statusCode}");
       debugPrint("body = ${response.body}");
@@ -49,7 +51,8 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
     try{ Uri uri= Uri.parse(url);
       debugPrint("Uri = $url");
     Response response =await post(uri,
-        headers: {'content-type': 'application/json'},
+        headers: {'content-type': 'application/json',
+          'token':AuthController.accessToken??''},
         body:jsonEncode(body) );
     if (response.statusCode==200){
       // ata print hoy

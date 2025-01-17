@@ -7,6 +7,7 @@ import 'package:task_management_live_project/view/screens/on_boarding_screens/se
 import 'package:task_management_live_project/view/screens/on_boarding_screens/signIn_screen/signIn_screen.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/splash_screen.dart';
 import 'package:task_management_live_project/view/screens/profile_screens/profile_update_screen/profile_update.dart';
+import 'package:task_management_live_project/view/screens/task_screens/add_new_task_screen/add_new_task_screen.dart';
 import 'package:task_management_live_project/view/screens/task_screens/nav_screen/nav_screen.dart';
 import 'package:task_management_live_project/view/screens/task_screens/new_task_list_screen/new_task_list_screen.dart';
 
@@ -40,8 +41,12 @@ class TaskManagement extends StatelessWidget {
           widget = const NewTaskListScreen();
         } else if (settings.name == ProfileUpdate.routeName) {
           widget = const ProfileUpdate();
-        } else {
-          // ডিফল্ট উইজেট যখন কোনো রুট মিলবে না
+        }else if (settings.name == AddNewTaskScreen.routeName) {
+          widget = const AddNewTaskScreen();
+        }
+
+        else {
+
           widget = const Scaffold(
             body: Center(
               child: Text("Page not found"),
