@@ -13,10 +13,11 @@ import 'package:task_management_live_project/view/screens/task_screens/new_task_
 
 class TaskManagement extends StatelessWidget {
   const TaskManagement({super.key});
-
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       theme: theme,
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routeName,

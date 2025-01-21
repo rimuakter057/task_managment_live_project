@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:task_management_live_project/view/screens/on_boarding_screens/signIn_screen/signIn_screen.dart';
 
+import '../../app.dart';
 import '../../controllers/auth_controller.dart';
 
 
@@ -20,7 +22,7 @@ NetworkResponse({required this.statusCode,
 
 class NetworkCaller{
 //get request
-// Map <String,dynamic> kno
+
 static  Future <NetworkResponse> getRequest({required String url})async{
  try{ Uri uri= Uri.parse(url);
  debugPrint("Uri = $url");
@@ -33,11 +35,15 @@ static  Future <NetworkResponse> getRequest({required String url})async{
         isSuccess: true,
         statusCode: response.statusCode,
           responseData: decodedData,);
-    } else {
+    } else if (response.statusCode == 401) {
+      await _logout();
+      return NetworkResponse(
+          isSuccess: false, statusCode: response.statusCode);
+    }
+    else {
       return NetworkResponse(
         isSuccess: true,
         statusCode: response.statusCode,
-       // responseData: decodedData,   akhane decoded data keno ney ni
       );
     }
   }catch(e){
@@ -72,6 +78,10 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
       return NetworkResponse(statusCode: response.statusCode,
           isSuccess:false,
           errorMessage: "bad request");
+    } else if (response.statusCode == 401) {
+      await _logout();
+      return NetworkResponse(
+          isSuccess: false, statusCode: response.statusCode);
     }
     else {
       return NetworkResponse(
@@ -86,4 +96,11 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
           errorMessage: e.toString());
     }
   }
+
+  // logout
+static Future <void> _logout()async{
+await  AuthController.clearUserData();
+Navigator.pushNamedAndRemoveUntil(TaskManagement.navigatorKey.currentContext!, SignInScreen.routeName, (_)=>false);
+}
+
 }
