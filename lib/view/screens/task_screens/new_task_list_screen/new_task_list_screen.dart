@@ -53,7 +53,13 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
                 primary: false,
                 itemCount: 20,
                 itemBuilder: (context, index) {
-                  return TaskItemWidget();
+                  return TaskItemWidget(
+                    title: 'Title',
+                    subtitle: 'subtitle',
+                    date: '8-12-2005',
+                    status: 'New',
+                    color: AppColors.blue,
+                  );
                 }),
           )
         ],

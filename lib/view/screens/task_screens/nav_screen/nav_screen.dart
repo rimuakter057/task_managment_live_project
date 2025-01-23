@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import '../../../../utils/assets_path.dart';
+import '../../../../utils/colors.dart';
 import '../add_new_task_screen/add_new_task_screen.dart';
 import '../new_task_list_screen/new_task_list_screen.dart';
 import '../task_cancel_list_screen/task_cancel_list_screen.dart';
@@ -20,29 +22,63 @@ class _NavScreenState extends State<NavScreen> {
   List <Widget>_screens=[
     NewTaskListScreen(),
     TaskCompletedListScreen(),
-    AddNewTaskScreen(),
-    TaskProgressListScreen(),
     TaskCancelListScreen(),
+    TaskProgressListScreen(),
+
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
        body:_screens[_selectedIndex],
-       bottomNavigationBar: NavigationBar(
-           selectedIndex: _selectedIndex,
-           onDestinationSelected: (index){
-             _selectedIndex=index;
-             setState(() {
-             });
-           },
-           destinations: [
-         NavigationDestination(icon: Icon(Icons.home),label: 'New'),
-         NavigationDestination(icon: Icon(Icons.person),label: 'Complete'),
-         NavigationDestination(icon: Icon(Icons.search), label: 'Create'),
-         NavigationDestination(icon: Icon(Icons.home),label: 'Progress'),
-         NavigationDestination(icon: Icon(Icons.person),label: 'Cancle'),
-       ]),
+      bottomNavigationBar: NavigationBar(
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: (index) {
+            _selectedIndex = index;
+            setState(() {});
+          },
+          destinations: [
+            NavigationDestination(
+              icon: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 0 ? AppColors.blue : AppColors.black,
+                  BlendMode.srcIn,
+                ),
+                child: Image.asset(AssetPath.newTask),
+              ),
+              label: 'New',
+            ),
+            NavigationDestination(
+              icon: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 1 ? AppColors.green : AppColors.black,
+                  BlendMode.srcIn,
+                ),
+                child: Image.asset(AssetPath.completedTask),
+              ),
+              label: 'Completed',
+            ),
+            NavigationDestination(
+              icon: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 2 ? AppColors.primaryColor : AppColors.black,
+                  BlendMode.srcIn,
+                ),
+                child: Image.asset(AssetPath.cancelTask),
+              ),
+              label: 'Canceled',
+            ),
+            NavigationDestination(
+              icon: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 3 ? AppColors.purple : AppColors.black,
+                  BlendMode.srcIn,
+                ),
+                child: Image.asset(AssetPath.progressTask),
+              ),
+              label: 'Progress',
+            ),
+          ]),
     );
   }
 }

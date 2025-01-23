@@ -1,6 +1,10 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../../utils/colors.dart';
+import '../../../widget/app_bar.dart';
+import '../../../widget/task_item_widget.dart';
+
 class TaskCompletedListScreen extends StatefulWidget {
   const TaskCompletedListScreen({super.key});
 
@@ -12,7 +16,27 @@ class _TaskCompletedListScreenState extends State<TaskCompletedListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Task Completed List Screen")),
+      appBar: const AppBarWidget(),
+      body: Column(
+        children: [
+
+          Expanded(
+            child: ListView.builder(
+                shrinkWrap: true,
+                primary: false,
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return TaskItemWidget(
+                    title: 'Title',
+                    subtitle: 'subtitle',
+                    date: '8-12-2005',
+                    status: 'completed',
+                    color: AppColors.green,
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,10 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../../utils/colors.dart';
+import '../../../widget/app_bar.dart';
+import '../../../widget/task_item_widget.dart';
+
 class TaskCancelListScreen extends StatefulWidget {
   const TaskCancelListScreen({super.key});
   static const routeName = '/task-cancel-list-screen';
@@ -13,7 +17,27 @@ class _TaskCancelListScreenState extends State<TaskCancelListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Task Cancel List Screen")),
+      appBar: const AppBarWidget(),
+      body: Column(
+        children: [
+
+          Expanded(
+            child: ListView.builder(
+                shrinkWrap: true,
+                primary: false,
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return TaskItemWidget(
+                    title: 'Title',
+                    subtitle: 'subtitle',
+                    date: '8-12-2005',
+                    status: 'Cancel',
+                    color: AppColors.primaryColor,
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

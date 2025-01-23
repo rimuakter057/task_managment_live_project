@@ -72,6 +72,8 @@ class _SignInScreenState extends State<SignInScreen> {
     if(_formKey.currentState!.validate()){
       _signInUser();
       debugPrint("success");
+
+
     }else{
       print("error message");
     }
@@ -149,7 +151,10 @@ class _SignInScreenState extends State<SignInScreen> {
         String token= response.responseData!['token'];
  UserModel userModel= UserModel.fromJson(response.responseData!['data']);
 await AuthController.saveUserData(token, userModel);
-      Navigator.pushNamedAndRemoveUntil( context, NavScreen.routeName,(protected)=>false);
+
+        Navigator.pushAndRemoveUntil(context,   MaterialPageRoute(builder: (context) => NavScreen()),
+                (_) => false);
+
     }else{
       _signInProgress = false;
       setState(() {

@@ -13,8 +13,9 @@ class NetworkResponse{
   final String errorMessage;
   final bool isSuccess;
 NetworkResponse({required this.statusCode,
- this.responseData,
   required this.isSuccess,
+ this.responseData,
+
    this.errorMessage = 'something went wrong',
 });
 }
@@ -35,14 +36,14 @@ static  Future <NetworkResponse> getRequest({required String url})async{
         isSuccess: true,
         statusCode: response.statusCode,
           responseData: decodedData,);
-    } else if (response.statusCode == 401) {
+    } /*else if (response.statusCode == 401) {
       await _logout();
       return NetworkResponse(
           isSuccess: false, statusCode: response.statusCode);
-    }
+    }*/
     else {
       return NetworkResponse(
-        isSuccess: true,
+        isSuccess: false,
         statusCode: response.statusCode,
       );
     }
@@ -78,14 +79,14 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
       return NetworkResponse(statusCode: response.statusCode,
           isSuccess:false,
           errorMessage: "bad request");
-    } else if (response.statusCode == 401) {
-      await _logout();
+    }/* else if (response.statusCode == 401) {
+   //   await _logout();
       return NetworkResponse(
           isSuccess: false, statusCode: response.statusCode);
-    }
+    }*/
     else {
       return NetworkResponse(
-        isSuccess: true,
+        isSuccess: false,
         statusCode: response.statusCode,
 
       );
@@ -98,9 +99,9 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
   }
 
   // logout
-static Future <void> _logout()async{
+/*static Future <void> _logout()async{
 await  AuthController.clearUserData();
 Navigator.pushNamedAndRemoveUntil(TaskManagement.navigatorKey.currentContext!, SignInScreen.routeName, (_)=>false);
-}
+}*/
 
 }

@@ -1,6 +1,10 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../../utils/colors.dart';
+import '../../../widget/app_bar.dart';
+import '../../../widget/task_item_widget.dart';
+
 class TaskProgressListScreen extends StatefulWidget {
   const TaskProgressListScreen({super.key});
   static const routeName = '/task-progress-list-screen';
@@ -13,7 +17,27 @@ class _TaskProgressListScreenState extends State<TaskProgressListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Task Progress List Screen")),
+      appBar: const AppBarWidget(),
+      body: Column(
+        children: [
+
+          Expanded(
+            child: ListView.builder(
+                shrinkWrap: true,
+                primary: false,
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return TaskItemWidget(
+                    title: 'Title',
+                    subtitle: 'subtitle',
+                    date: '8-12-2005',
+                    status: 'progress',
+                    color: AppColors.purple,
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

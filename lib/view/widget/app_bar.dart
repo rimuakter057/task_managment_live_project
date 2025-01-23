@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_management_live_project/controllers/auth_controller.dart';
 import 'package:task_management_live_project/view/screens/profile_screens/profile_update_screen/profile_update.dart';
 
+import '../../utils/assets_path.dart';
 import '../../utils/colors.dart';
 import '../screens/on_boarding_screens/signIn_screen/signIn_screen.dart';
 
@@ -21,9 +22,9 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.primaryColor,
       title: Row(
         children: [
-          CircleAvatar(
-            radius: 15,
-            backgroundColor: AppColors.white,
+        const CircleAvatar(
+            radius: 30,
+            backgroundImage: AssetImage(AssetPath.user,),
           ),
           Expanded(
             child: GestureDetector(
