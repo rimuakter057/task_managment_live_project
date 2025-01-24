@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_management_live_project/data/service/network_caller.dart';
 import 'package:task_management_live_project/utils/app_text.dart';
 
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
+import '../../../../utils/url.dart';
 import '../pin_verification_screen/pin_verification_screen.dart';
 class ForgetEmailVerifyScreen extends StatefulWidget {
   const ForgetEmailVerifyScreen({super.key});
@@ -49,7 +51,12 @@ class _ForgetEmailVerifyScreenState extends State<ForgetEmailVerifyScreen> {
               const SizedBox(height: 40,),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, PinVerificationScreen.routeName);
+                  _recoverVerifyEmail(_emailController.text);
+                  Navigator.pushNamed(context, PinVerificationScreen.routeName,
+                    arguments: {
+
+                    },
+                  );
                 },
                 child:  const Text(
                   AppTexts.continueT,
@@ -86,5 +93,15 @@ class _ForgetEmailVerifyScreenState extends State<ForgetEmailVerifyScreen> {
     );
   }
 
+  // recover verify send email
 
+  Future<void> _recoverVerifyEmail(String email) async {
+    final NetworkResponse response =
+    await NetworkCaller.getRequest(url: Urls.recoverVerifyEmail(email));
+    if (response.isSuccess) {
+      debugPrint("success");
+    }else{
+      debugPrint("fail");
+    }
+  }
 }

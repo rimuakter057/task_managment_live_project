@@ -104,7 +104,7 @@ PinTheme appPinTheme() {
   return PinTheme(
     errorBorderColor: AppColors.black,
     inactiveColor: AppColors.primaryColor,
-    activeColor: AppColors.white,
+    activeColor: AppColors.purple,
     shape: PinCodeFieldShape.box,
     borderRadius: BorderRadius.circular(5),
   );

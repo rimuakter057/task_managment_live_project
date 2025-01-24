@@ -24,7 +24,7 @@ class TaskManagement extends StatelessWidget {
       initialRoute: SplashScreen.routeName,
       onGenerateRoute: (RouteSettings settings) {
         late Widget widget;
-        if (settings.name == SplashScreen.routeName) {
+        if (settings.name ==SplashScreen.routeName) {
           widget = const SplashScreen();
         }
         else if (settings.name == SignInScreen.routeName) {
@@ -33,24 +33,26 @@ class TaskManagement extends StatelessWidget {
           widget = const SignUpScreen();
         } else if (settings.name ==ForgetEmailVerifyScreen.routeName) {
           widget = const ForgetEmailVerifyScreen();
-        } else if (settings.name ==  PinVerificationScreen.routeName) {
-          widget = const PinVerificationScreen();
-        } else if (settings.name == SetPasswordScreen.routeName) {
+        }
+        else if (settings.name ==ProfileUpdate .routeName) {
+          widget = const ProfileUpdate ();
+        }
+        else if (settings.name == SetPasswordScreen.routeName) {
           widget = const  SetPasswordScreen();
-        } else if (settings.name == NavScreen.routeName) {
+        } else if (settings.name == PinVerificationScreen.routeName) {
+          widget = const  PinVerificationScreen(email: ' ',);
+        }
+        else if (settings.name == NavScreen.routeName) {
           widget = const NavScreen();
         } else if (settings.name == NewTaskListScreen.routeName) {
           widget = const NewTaskListScreen();
-        } else if (settings.name == ProfileUpdate.routeName) {
-          widget = const ProfileUpdate();
-        }else if (settings.name == AddNewTaskScreen.routeName) {
+        } else if (settings.name == AddNewTaskScreen.routeName) {
           widget = const AddNewTaskScreen();
         }else if (settings.name == UpdateTaskScreen.routeName) {
           widget = const UpdateTaskScreen();
         }
 
         else {
-
           widget = const Scaffold(
             body: Center(
               child: Text("Page not found"),

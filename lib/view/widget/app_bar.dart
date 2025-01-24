@@ -20,32 +20,33 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     final  textTheme= Theme.of(context).textTheme;
     return AppBar(
       backgroundColor: AppColors.primaryColor,
-      title: Row(
-        children: [
-        const CircleAvatar(
-            radius: 30,
-            backgroundImage: AssetImage(AssetPath.user,),
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: (){
-                if( fromUpdateProfile==false ){
-                  Navigator.pushNamed(context,ProfileUpdate.routeName);
-                }
+      title: GestureDetector(
+        onTap: (){
 
-              },
+          if( fromUpdateProfile==false ){
+            Navigator.pushNamed(context,ProfileUpdate.routeName);
+          }
+
+        },
+        child: Row(
+          children: [
+          const CircleAvatar(
+              radius: 30,
+              backgroundImage: AssetImage(AssetPath.user,),
+            ),
+            Expanded(
               child: Column(children: [
                 Text(AuthController.userModel?.fullName??"",style:textTheme.titleLarge?.copyWith(color: AppColors.white) ,),
                 Text(AuthController.userModel?.email??"",style:textTheme.bodySmall?.copyWith(color: AppColors.white) ,),
               ],),
             ),
-          ),
-          IconButton(onPressed: ()async{
-         await   AuthController.clearUserData();
-            Navigator.pushNamedAndRemoveUntil(context, SignInScreen.routeName, (predicate)=>false);
-          },
-              icon:Icon(Icons.logout,color: AppColors.white,) ),
-        ],
+            IconButton(onPressed: ()async{
+           await   AuthController.clearUserData();
+              Navigator.pushNamedAndRemoveUntil(context, SignInScreen.routeName, (predicate)=>false);
+            },
+                icon:Icon(Icons.logout,color: AppColors.white,) ),
+          ],
+        ),
       ),
     );
   }
