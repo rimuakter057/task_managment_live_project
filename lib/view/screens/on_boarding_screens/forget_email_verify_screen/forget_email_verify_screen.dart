@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_management_live_project/utils/app_text.dart';
 
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
@@ -36,17 +37,22 @@ class _ForgetEmailVerifyScreenState extends State<ForgetEmailVerifyScreen> {
               const SizedBox(height: 15),
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(
-                  hintText: 'Email',
+                decoration:  const InputDecoration(
+                  hintText: AppTexts.emailHint,
                 ),
+                validator: (String? value) {
+                  if(value?.trim().isEmpty??true){
+                    return "email can't be empty";
+                  }return null;
+                },
               ),
               const SizedBox(height: 40,),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, PinVerificationScreen.routeName);
                 },
-                child: const Text(
-                  "Continue",
+                child:  const Text(
+                  AppTexts.continueT,
                 ),
               ),
               const SizedBox(
@@ -59,6 +65,7 @@ class _ForgetEmailVerifyScreenState extends State<ForgetEmailVerifyScreen> {
       ),
     );
   }
+
   // build sign in section
   RichText _buildSignInSection() {
     return RichText(text: TextSpan(
@@ -78,6 +85,6 @@ class _ForgetEmailVerifyScreenState extends State<ForgetEmailVerifyScreen> {
     ),
     );
   }
-  // dispose
+
 
 }

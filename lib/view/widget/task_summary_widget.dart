@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../data/service/network_caller.dart';
 import '../../utils/colors.dart';
+import '../../utils/url.dart';
 
 class TaskStatusSummaryCounterWidget extends StatelessWidget {
   const TaskStatusSummaryCounterWidget({
@@ -18,11 +20,13 @@ class TaskStatusSummaryCounterWidget extends StatelessWidget {
         child:Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
           child: Column(children: [
-            Text("01",style: textTheme.titleLarge,),
-            Text("text",style:textTheme.titleSmall,),
 
+            Text(count,style:textTheme.titleLarge,),
+            Text(title,style: textTheme.titleMedium,),
           ],),
         )
     );
   }
+
+
 }

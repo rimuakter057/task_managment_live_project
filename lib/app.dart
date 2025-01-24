@@ -10,6 +10,7 @@ import 'package:task_management_live_project/view/screens/profile_screens/profil
 import 'package:task_management_live_project/view/screens/task_screens/add_new_task_screen/add_new_task_screen.dart';
 import 'package:task_management_live_project/view/screens/task_screens/nav_screen/nav_screen.dart';
 import 'package:task_management_live_project/view/screens/task_screens/new_task_list_screen/new_task_list_screen.dart';
+import 'package:task_management_live_project/view/screens/task_screens/update_task_screen/update_task_screen.dart';
 
 class TaskManagement extends StatelessWidget {
   const TaskManagement({super.key});
@@ -44,6 +45,8 @@ class TaskManagement extends StatelessWidget {
           widget = const ProfileUpdate();
         }else if (settings.name == AddNewTaskScreen.routeName) {
           widget = const AddNewTaskScreen();
+        }else if (settings.name == UpdateTaskScreen.routeName) {
+          widget = const UpdateTaskScreen();
         }
 
         else {

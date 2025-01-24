@@ -52,6 +52,8 @@ class AppTexts{
  static const String noAccount = "you don't have an account?";
   static const String number = "5";
   static const String text = "text";
+  static const String success = "success";
+  static const String failed = "failed";
 
 
 

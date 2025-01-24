@@ -42,7 +42,7 @@ inputDecorationTheme: InputDecorationTheme(
     ),
     titleMedium:TextStyle(
         fontSize: 18,
-        color: AppColors.grey,
+        color: AppColors.black,
         fontWeight: FontWeight.w400
     ),
     bodySmall: TextStyle(

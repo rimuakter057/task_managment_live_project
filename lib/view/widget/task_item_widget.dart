@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:task_management_live_project/data/models/task_list/task_list_status_model.dart';
 
+import '../../data/service/network_caller.dart';
 import '../../utils/colors.dart';
+import '../../utils/url.dart';
+
 class TaskItemWidget extends StatelessWidget {
+
+  const TaskItemWidget({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.date,
+    required this.status,
+    required this.color,
+    this.deleteIconColor,
+    this.editIconColor, required this.taskModel, required this.taskId,required this.onTap,
+  });
+ final String taskId;
   final String title;
   final String subtitle;
   final String date;
@@ -9,9 +25,8 @@ class TaskItemWidget extends StatelessWidget {
   final Color color;
   final Color? deleteIconColor;
   final Color? editIconColor;
-  const TaskItemWidget({
-    super.key, required this.title, required this.subtitle, required this.date, required this.status, required this.color, this.deleteIconColor, this.editIconColor,
-  });
+  final TaskModel taskModel;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +34,18 @@ class TaskItemWidget extends StatelessWidget {
     return Card(
       elevation: 0,
       child: ListTile(
-        title: Text(
-          title,
-          style: theme.textTheme.titleMedium,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              taskId,
+              style: theme.textTheme.titleMedium,
+            ),
+            Text(
+              title,
+              style: theme.textTheme.titleMedium,
+            ),
+          ],
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,12 +62,11 @@ class TaskItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Chip(
-                  side: BorderSide(
-                      color: AppColors.grey
-                  ),
+                  side: BorderSide(color: AppColors.grey),
                   label: Text(
                     status,
-                    style: theme.textTheme.bodySmall!.copyWith(color: Colors.white),
+                    style: theme.textTheme.bodySmall!
+                        .copyWith(color: Colors.white),
                   ),
                   backgroundColor: color,
                   shape: RoundedRectangleBorder(
@@ -56,13 +79,13 @@ class TaskItemWidget extends StatelessWidget {
                         onPressed: () {},
                         icon: Icon(
                           Icons.edit,
-                          color:editIconColor?? AppColors.primaryColor,
+                          color: editIconColor ?? AppColors.primaryColor,
                         )),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: onTap,
                         icon: Icon(
                           Icons.delete,
-                          color:deleteIconColor?? AppColors.black,
+                          color: deleteIconColor ?? AppColors.black,
                         )),
                   ],
                 ),
@@ -73,43 +96,8 @@ class TaskItemWidget extends StatelessWidget {
       ),
     );
   }
+
+
 }
 
 
-/*
-class TaskItemWidget extends StatelessWidget {
-  const TaskItemWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: AppColors.white,
-      elevation: 0,
-      child: ListTile(
-        title: Text("data"),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("description data"),
-            Text("date:13-1-2025"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Chip(label: Text("data")),
-                Row(
-                  children: [
-                    IconButton(onPressed: (){},
-                        icon:Icon(Icons.edit,color: AppColors.primaryColor,)),
-                    IconButton(onPressed: (){},
-                        icon:Icon(Icons.delete,color: AppColors.primaryColor,)),
-                  ],
-                ),
-              ],)
-          ],
-        ),
-      ),
-    );
-  }
-}*/

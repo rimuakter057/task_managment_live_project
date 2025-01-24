@@ -29,7 +29,15 @@ class _NavScreenState extends State<NavScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            AddNewTaskScreen.routeName,
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
        body:_screens[_selectedIndex],
       bottomNavigationBar: NavigationBar(
           selectedIndex: _selectedIndex,
