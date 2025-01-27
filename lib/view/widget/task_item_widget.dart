@@ -9,24 +9,26 @@ class TaskItemWidget extends StatelessWidget {
 
   const TaskItemWidget({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.date,
     required this.status,
     required this.color,
     this.deleteIconColor,
-    this.editIconColor, required this.taskModel, required this.taskId,required this.onTap,
+    this.editIconColor,
+    required this.taskModel,
+    required this.onTap,
+    required this.editOnTap,
+
+
   });
- final String taskId;
-  final String title;
-  final String subtitle;
-  final String date;
+
   final String status;
   final Color color;
   final Color? deleteIconColor;
   final Color? editIconColor;
   final TaskModel taskModel;
   final void Function()? onTap;
+  final void Function()? editOnTap;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +39,9 @@ class TaskItemWidget extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Text(
-              taskId,
-              style: theme.textTheme.titleMedium,
-            ),
-            Text(
-              title,
+              taskModel.title ?? 'something wrong',
               style: theme.textTheme.titleMedium,
             ),
           ],
@@ -51,11 +50,11 @@ class TaskItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              subtitle,
+              taskModel.description ?? 'something wrong',
               style: theme.textTheme.bodySmall,
             ),
             Text(
-              date,
+              taskModel.createdDate ?? 'something wrong',
               style: theme.textTheme.bodySmall,
             ),
             Row(
@@ -76,7 +75,7 @@ class TaskItemWidget extends StatelessWidget {
                 Row(
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: editOnTap,
                         icon: Icon(
                           Icons.edit,
                           color: editIconColor ?? AppColors.primaryColor,
@@ -96,6 +95,10 @@ class TaskItemWidget extends StatelessWidget {
       ),
     );
   }
+
+
+
+
 
 
 }

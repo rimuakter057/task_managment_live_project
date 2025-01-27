@@ -6,11 +6,16 @@ import 'package:task_management_live_project/utils/colors.dart';
 import 'package:task_management_live_project/view/screens/task_screens/nav_screen/nav_screen.dart';
 import '../../../../controllers/auth_controller.dart';
 import '../../../../data/models/user_model.dart';
+import '../../../../utils/app_text.dart';
 import '../../../../utils/styles.dart';
 import '../../../../utils/url.dart';
+import '../../../widget/sign_in_up_section.dart';
 import '../../../widget/snack_bar_message.dart';
 import '../Signup_screen/signup_screen.dart';
 import '../forget_email_verify_screen/forget_email_verify_screen.dart';
+
+
+
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -39,13 +44,10 @@ class _SignInScreenState extends State<SignInScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Get Started With",
+               AppTexts.signInHeadline,
                 style:titleStyle,
               ),
-              Text(
-                "Learn With Ostad Platform",
-                style: head2TextStyle(context: context),
-              ),
+
               const SizedBox(
                 height: 10,
               ),
@@ -56,10 +58,15 @@ class _SignInScreenState extends State<SignInScreen> {
               TextButton(onPressed: (){
                 Navigator.pushNamed(context, ForgetEmailVerifyScreen.routeName);
               },
-                child: Text("Forgot Password?",style: bodySmallStyle
+                child: Text(AppTexts.forgotPass,style: bodySmallStyle
                 ),
               ),
-              _buildSignUpTextSection(),
+              //sign up text section
+              SignInUpSection(context: context,text: AppTexts.signUp,
+              onTap:(){
+                Navigator.pushNamedAndRemoveUntil(context, SignUpScreen.routeName, (_) => false);
+              },
+              )
             ],
           ),
         ),
@@ -71,11 +78,11 @@ class _SignInScreenState extends State<SignInScreen> {
   void _signInOnTap(){
     if(_formKey.currentState!.validate()){
       _signInUser();
-      debugPrint("success");
+    showSnackBar(AppTexts.success, context);
 
 
     }else{
-      print("error message");
+      showSnackBar(AppTexts.failed, context);
     }
   }
   //sign in form
@@ -88,11 +95,11 @@ class _SignInScreenState extends State<SignInScreen> {
             keyboardType: TextInputType.emailAddress,
             controller: _emailController,
             decoration: const InputDecoration(
-              hintText: 'Email',
+              hintText: AppTexts.emailHint,
             ),
             validator: (String? value) {
               if(value?.trim().isEmpty??true){
-                return "email can't be empty";
+                return AppTexts.emailError;
               }return null;
             },
           ),
@@ -103,11 +110,11 @@ class _SignInScreenState extends State<SignInScreen> {
             obscureText: true,
             controller: _passwordController,
             decoration: const InputDecoration(
-              hintText: 'Password',
+              hintText: AppTexts.passwordHint,
             ),
             validator: (String? value) {
               if(value?.trim().isEmpty??true){
-                return "password can't be empty";
+                return AppTexts.passwordError;
               }if(value!.length<6){
                 return "password must be at least 6 characters";
               }
@@ -124,8 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),),
             child: ElevatedButton(
               onPressed: _signInOnTap,
-              child: const Text(
-                "Sign In",
+              child:  const Text( AppTexts.signIn,
               ),
             ),
           ),
@@ -142,7 +148,7 @@ class _SignInScreenState extends State<SignInScreen> {
     //add body
     Map<String,dynamic> requestBody = {
         "email":_emailController.text.trim(),
-        "password":_passwordController.text.trim()
+        "password":_passwordController.text
     };
     // api intention
  final NetworkResponse response = await NetworkCaller.postRequest(
@@ -152,16 +158,16 @@ class _SignInScreenState extends State<SignInScreen> {
  UserModel userModel= UserModel.fromJson(response.responseData!['data']);
 await AuthController.saveUserData(token, userModel);
 
-        Navigator.pushAndRemoveUntil(context,   MaterialPageRoute(builder: (context) => NavScreen()),
-                (_) => false);
+        Navigator.pushNamedAndRemoveUntil(context,  NavScreen.routeName,  (_) => false);
 
+_clearTextField();
     }else{
       _signInProgress = false;
       setState(() {
 
       });
       if(response.statusCode==401){
-        return showSnackBar("Invalid email or password", context);
+        return showSnackBar(AppTexts.invalidMailPassword, context);
       }
       return showSnackBar(response.errorMessage, context);
     }
@@ -173,25 +179,8 @@ await AuthController.saveUserData(token, userModel);
     _passwordController.clear();
   }
 
-  //sign up text section
-  RichText _buildSignUpTextSection() {
-    return RichText(text: TextSpan(
-              text: "you don't have an account?",
-                style:Theme.of(context).textTheme.bodySmall,
-              children: [
-                TextSpan(
-                  text: "Sign up",
-                  style: TextStyle(
-                    color: AppColors.primaryColor,
-                  ),
-                  recognizer: TapGestureRecognizer()..onTap = (){
-                    Navigator.pushNamed(context, SignUpScreen.routeName);
-                  },
-                ),
-              ]
-    ),
-    );
-  }
+
+
   //dispose
   @override
   void dispose() {

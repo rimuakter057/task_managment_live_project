@@ -79,11 +79,11 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
       return NetworkResponse(statusCode: response.statusCode,
           isSuccess:false,
           errorMessage: "bad request");
-    }/* else if (response.statusCode == 401) {
+    } else if (response.statusCode == 401) {
    //   await _logout();
       return NetworkResponse(
           isSuccess: false, statusCode: response.statusCode);
-    }*/
+    }
     else {
       return NetworkResponse(
         isSuccess: false,
@@ -98,43 +98,14 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
     }
   }
 
-/*  //delete request
-  static  Future <NetworkResponse> deleteRequest({required String url,required String taskId})async{
-    try{ Uri uri= Uri.parse(url);
-    debugPrint("Uri = $url");
-    Response response =await delete(uri,headers: {'token':AuthController.accessToken??''});
-    if (response.statusCode==200){
-      debugPrint("status = ${response.statusCode}");
-      debugPrint("body = ${response.body}");
-      final decodedData= jsonDecode(response.body);
-      return NetworkResponse(
-        isSuccess: true,
-        statusCode: response.statusCode,
-        responseData: decodedData,);
-    } else if (response.statusCode == 401) {
-    print("response status code = ${response.statusCode}");
-      return NetworkResponse(
-          isSuccess: false, statusCode: response.statusCode);
-    }
-    else {
-      return NetworkResponse(
-        isSuccess: false,
-        statusCode: response.statusCode,
-      );
-    }
-    }catch(e){
-      return NetworkResponse(statusCode: -1,
-          isSuccess: false,
-          errorMessage: e.toString());
-    }
-  }*/
+
 
 
 
   // logout
-/*static Future <void> _logout()async{
+static Future <void> _logout()async{
 await  AuthController.clearUserData();
 Navigator.pushNamedAndRemoveUntil(TaskManagement.navigatorKey.currentContext!, SignInScreen.routeName, (_)=>false);
-}*/
+}
 
 }

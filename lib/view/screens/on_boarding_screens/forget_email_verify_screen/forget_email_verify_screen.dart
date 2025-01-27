@@ -1,11 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_management_live_project/data/service/network_caller.dart';
 import 'package:task_management_live_project/utils/app_text.dart';
+import 'package:task_management_live_project/view/widget/circular_indicator.dart';
 
 import '../../../../utils/colors.dart';
 import '../../../../utils/styles.dart';
 import '../../../../utils/url.dart';
+import '../../../widget/sign_in_up_section.dart';
+import '../../../widget/snack_bar_message.dart';
 import '../pin_verification_screen/pin_verification_screen.dart';
 class ForgetEmailVerifyScreen extends StatefulWidget {
   const ForgetEmailVerifyScreen({super.key});
@@ -18,6 +22,8 @@ class ForgetEmailVerifyScreen extends StatefulWidget {
 
 class _ForgetEmailVerifyScreenState extends State<ForgetEmailVerifyScreen> {
   final TextEditingController _emailController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _recoveryEmailInProgress = false;
   @override
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.titleLarge;
@@ -30,42 +36,55 @@ class _ForgetEmailVerifyScreenState extends State<ForgetEmailVerifyScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 80),
-              Text('Your Email Address', style: titleStyle),
+              Text(AppTexts.emailHeadline, style: titleStyle),
               const SizedBox(height: 4),
               Text(
-                'A 6 digits of OTP will be sent to your email address',
+             AppTexts.emailHeadline2,
                 style: mediumTitleStyle,
               ),
               const SizedBox(height: 15),
-              TextFormField(
-                controller: _emailController,
-                decoration:  const InputDecoration(
-                  hintText: AppTexts.emailHint,
-                ),
-                validator: (String? value) {
-                  if(value?.trim().isEmpty??true){
-                    return "email can't be empty";
-                  }return null;
-                },
-              ),
-              const SizedBox(height: 40,),
-              ElevatedButton(
-                onPressed: () {
-                  _recoverVerifyEmail(_emailController.text);
-                  Navigator.pushNamed(context, PinVerificationScreen.routeName,
-                    arguments: {
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _emailController,
+                      decoration:  const InputDecoration(
+                        hintText: AppTexts.emailHint,
+                      ),
+                      validator: (String? value) {
+                        if(value?.trim().isEmpty??true){
+                          return AppTexts.emailError;
+                        }return null;
+                      },
+                    ),
+                    const SizedBox(height: 40,),
+                    Visibility(
+                      visible: _recoveryEmailInProgress == false,
+                      replacement: const CircularIndicator(),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if(_formKey.currentState!.validate()){
+                          _recoverVerifyEmail();}
 
-                    },
-                  );
-                },
-                child:  const Text(
-                  AppTexts.continueT,
+                        },
+                        child:  const Text(
+                          AppTexts.continueT,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              _buildSignInSection(),
+          // sign in text section
+          SignInUpSection(context: context,
+          onTap: (){
+            Navigator.pop(context);
+          },
+          )
             ],
           ),
         ),
@@ -73,35 +92,39 @@ class _ForgetEmailVerifyScreenState extends State<ForgetEmailVerifyScreen> {
     );
   }
 
-  // build sign in section
-  RichText _buildSignInSection() {
-    return RichText(text: TextSpan(
-        text: "Already have an account?",
-        style:Theme.of(context).textTheme.bodySmall,
-        children: [
-          TextSpan(
-            text: "Sign In",
-            style: TextStyle(
-              color: AppColors.primaryColor,
-            ),
-            recognizer: TapGestureRecognizer()..onTap = (){
-              Navigator.pop(context);
-            },
-          ),
-        ]
-    ),
-    );
-  }
+
 
   // recover verify send email
 
-  Future<void> _recoverVerifyEmail(String email) async {
+  Future<void> _recoverVerifyEmail() async {
+    _recoveryEmailInProgress = true;
+    setState(() {});
+    String email = _emailController.text.trim();
     final NetworkResponse response =
     await NetworkCaller.getRequest(url: Urls.recoverVerifyEmail(email));
     if (response.isSuccess) {
-      debugPrint("success");
-    }else{
-      debugPrint("fail");
+      final prefs=await SharedPreferences.getInstance();
+      await prefs.setString("email", email);
+      debugPrint(email);
+      Navigator.pushNamed(context, PinVerificationScreen.routeName,
+     // arguments: email
+      );
+      showSnackBar(AppTexts.mailSuccess, context);
+
     }
+    else{
+
+      showSnackBar(AppTexts.emailError, context);
+    }
+    _recoveryEmailInProgress = false;
+    setState(() {});
+  }
+  //dispose
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
   }
 }
+
+

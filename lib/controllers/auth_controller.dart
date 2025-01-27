@@ -19,6 +19,8 @@ class AuthController {
  SharedPreferences sharedPreferences =   await SharedPreferences.getInstance();
  sharedPreferences.setString(_accessTokenKey,token);
  sharedPreferences.setString(_userDataKey, jsonEncode(model.toJson()));
+ accessToken = token;
+ userModel = model;
   }
 
   // get user data

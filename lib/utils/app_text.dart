@@ -10,11 +10,13 @@ class AppTexts{
   static const String signInHeadline = "Get Started With";
   static const String signupHeadline="Join With Us";
   static const String emailHeadline = "Your Email Address";
+  static const String emailHeadline2 =    'A 6 digits of OTP will be sent to your email address';
   static const String pinHeadline="Pin Verification";
   static const String passHeadline = "Set Password";
   static const String pass1Headline="Set Password";
   static const String updateProfileHeadline="Update Profile";
-  static const String addNewTaskHeadline="Add New Task";
+  static const String addTaskHeadline="Add Task";
+  static const String updateTaskHeadline="Update Task";
 
   //headline two
   static const String passHeadline2="Update Profile";
@@ -29,6 +31,7 @@ class AppTexts{
   static const String mobileNumberHint = "Mobile Number";
   static const String title = "title";
   static const String description = "description";
+  static const String confirmedPasswordHint = "Confirmed Password";
 
   // button text
   static const String signIn="Sign In";
@@ -46,6 +49,12 @@ class AppTexts{
   static const String somethingWrong="Something wrong";
   static const String titleError = "title can't be empty";
   static const String descriptionError="description can't be empty";
+  static const String confirmedPasswordError = "Password can't be empty";
+
+  //snack bar success message and
+  static const String mailSuccess = "Email sent successfully";
+  static const String mailFailed = "Email sent failed";
+  static const String otpFailed = "Please enter a 6-digit OTP";
 
   /////////
  static const String forgotPass = "Forgot Password?";
@@ -54,6 +63,7 @@ class AppTexts{
   static const String text = "text";
   static const String success = "success";
   static const String failed = "failed";
+  static const String invalidMailPassword = "Invalid email or password";
 
 
 

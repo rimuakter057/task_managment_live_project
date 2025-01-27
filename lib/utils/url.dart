@@ -9,7 +9,9 @@ class Urls{
   static  String deleteTask(String taskId) => "$_baseUrl/deleteTask/$taskId";
   static String updateTask(String taskId, String status)=>"$_baseUrl/updateTaskStatus/$taskId/$status";
   static  String recoverVerifyEmail(String email) => "$_baseUrl/RecoverVerifyEmail/$email";
-  static  String recoverVerifyOtp(String email,String otp) => "$_baseUrl/deleteTask/$email/$otp";
+  static  String recoverVerifyOtp(String email,String otp) => "$_baseUrl/RecoverVerifyOtp/$email/$otp";
   static const  String recoverResetPassword = "$_baseUrl/RecoverResetPassword";
   static const String updateProfile = "$_baseUrl/ProfileUpdate";
+  static  String updateTaskStatus(String taskId,String status) => "$_baseUrl/updateTaskStatus/$taskId/$status";
+
 }

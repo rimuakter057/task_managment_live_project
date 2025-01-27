@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:task_management_live_project/utils/app_text.dart';
 import '../../../../utils/assets_path.dart';
 import '../../../../utils/colors.dart';
-import '../add_new_task_screen/add_new_task_screen.dart';
+import '../add_task_screen/add_task_screen.dart';
 import '../new_task_list_screen/new_task_list_screen.dart';
 import '../task_cancel_list_screen/task_cancel_list_screen.dart';
 import '../task_completed_list_screen/task_completed_list_screen.dart';
@@ -33,7 +34,7 @@ class _NavScreenState extends State<NavScreen> {
         onPressed: () {
           Navigator.pushNamed(
             context,
-            AddNewTaskScreen.routeName,
+            AddTaskScreen.routeName,
           );
         },
         child: const Icon(Icons.add),
@@ -54,7 +55,7 @@ class _NavScreenState extends State<NavScreen> {
                 ),
                 child: Image.asset(AssetPath.newTask),
               ),
-              label: 'New',
+              label: AppTexts.newT,
             ),
             NavigationDestination(
               icon: ColorFiltered(
@@ -64,7 +65,7 @@ class _NavScreenState extends State<NavScreen> {
                 ),
                 child: Image.asset(AssetPath.completedTask),
               ),
-              label: 'Completed',
+              label: AppTexts.complete,
             ),
             NavigationDestination(
               icon: ColorFiltered(
@@ -74,7 +75,7 @@ class _NavScreenState extends State<NavScreen> {
                 ),
                 child: Image.asset(AssetPath.cancelTask),
               ),
-              label: 'Canceled',
+              label: AppTexts.cancel,
             ),
             NavigationDestination(
               icon: ColorFiltered(
@@ -84,7 +85,7 @@ class _NavScreenState extends State<NavScreen> {
                 ),
                 child: Image.asset(AssetPath.progressTask),
               ),
-              label: 'Progress',
+              label: AppTexts.progress,
             ),
           ]),
     );

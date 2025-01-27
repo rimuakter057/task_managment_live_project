@@ -6,15 +6,15 @@ import 'package:task_management_live_project/view/widget/snack_bar_message.dart'
 import '../../../../utils/colors.dart';
 import '../../../../utils/url.dart';
 
-class AddNewTaskScreen extends StatefulWidget {
-  const AddNewTaskScreen({super.key});
+class AddTaskScreen extends StatefulWidget {
+  const AddTaskScreen({super.key});
   static const routeName = '/add-new-task-screen';
 
   @override
-  State<AddNewTaskScreen> createState() => _AddNewTaskScreenState();
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
 
-class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
+class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -29,7 +29,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppTexts.addNewTaskHeadline,
+            AppTexts.addTaskHeadline,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(
@@ -81,7 +81,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
 
                 ),
                 value: _selectedValue, // Initial value (can be null)
-                items: <String>['New', 'Cancelled', 'Completed','Progress'].map((String value) {
+                items: <String>['New', 'Canceled', 'Completed','Progress'].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:task_management_live_project/theme/theme_styles.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/Signup_screen/signup_screen.dart';
@@ -7,10 +9,10 @@ import 'package:task_management_live_project/view/screens/on_boarding_screens/se
 import 'package:task_management_live_project/view/screens/on_boarding_screens/signIn_screen/signIn_screen.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/splash_screen.dart';
 import 'package:task_management_live_project/view/screens/profile_screens/profile_update_screen/profile_update.dart';
-import 'package:task_management_live_project/view/screens/task_screens/add_new_task_screen/add_new_task_screen.dart';
+import 'package:task_management_live_project/view/screens/task_screens/add_task_screen/add_task_screen.dart';
 import 'package:task_management_live_project/view/screens/task_screens/nav_screen/nav_screen.dart';
 import 'package:task_management_live_project/view/screens/task_screens/new_task_list_screen/new_task_list_screen.dart';
-import 'package:task_management_live_project/view/screens/task_screens/update_task_screen/update_task_screen.dart';
+
 
 class TaskManagement extends StatelessWidget {
   const TaskManagement({super.key});
@@ -38,20 +40,19 @@ class TaskManagement extends StatelessWidget {
           widget = const ProfileUpdate ();
         }
         else if (settings.name == SetPasswordScreen.routeName) {
-          widget = const  SetPasswordScreen();
+
+          widget = const SetPasswordScreen(
+          );
         } else if (settings.name == PinVerificationScreen.routeName) {
-          widget = const  PinVerificationScreen(email: ' ',);
+          widget =   PinVerificationScreen();
         }
         else if (settings.name == NavScreen.routeName) {
           widget = const NavScreen();
         } else if (settings.name == NewTaskListScreen.routeName) {
           widget = const NewTaskListScreen();
-        } else if (settings.name == AddNewTaskScreen.routeName) {
-          widget = const AddNewTaskScreen();
-        }else if (settings.name == UpdateTaskScreen.routeName) {
-          widget = const UpdateTaskScreen();
+        } else if (settings.name == AddTaskScreen.routeName) {
+          widget = const AddTaskScreen();
         }
-
         else {
           widget = const Scaffold(
             body: Center(

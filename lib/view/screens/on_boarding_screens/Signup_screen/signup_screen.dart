@@ -2,11 +2,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_management_live_project/data/service/network_caller.dart';
+import 'package:task_management_live_project/utils/app_text.dart';
 import 'package:task_management_live_project/utils/colors.dart';
 import 'package:task_management_live_project/view/widget/snack_bar_message.dart';
 
 import '../../../../utils/styles.dart';
 import '../../../../utils/url.dart';
+import '../../../widget/sign_in_up_section.dart';
 import '../signIn_screen/signIn_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -39,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Join With Us",
+               AppTexts.signUp,
              style: textTheme.titleLarge,
               ),
               Text(
@@ -70,12 +72,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
+                    decoration: InputDecoration(
+                      hintText:AppTexts.emailHint ,
                     ),
                     validator: (String? value) {
                       if(value?.trim().isEmpty??true){
-                        return "email can't be empty";
+                        return AppTexts.emailError;
                       }return null;
                     },
                   ),
@@ -85,11 +87,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextFormField(
                     controller: _firstNameController,
                     decoration: const InputDecoration(
-                      hintText: 'First Name',
+                      hintText: AppTexts.firstNameHint,
                     ),
                     validator: (String? value) {
                       if(value?.trim().isEmpty??true){
-                        return "first name can't be empty";
+                        return AppTexts.firstNameError;
                       }return null;
                     },
                   ),
@@ -99,11 +101,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextFormField(
                     controller: _lastNameController,
                     decoration: const InputDecoration(
-                      hintText: 'Last Name',
+                      hintText: AppTexts.lastNameHint,
                     ),
                     validator: (String? value) {
                       if(value?.trim().isEmpty??true){
-                        return "last name can't be empty";
+                        return AppTexts.lastNameError;
                       }return null;
                     },
                   ),
@@ -113,11 +115,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextFormField(
                     controller: _mobileNumberController,
                     decoration: const InputDecoration(
-                      hintText: 'Mobile Number',
+                      hintText: AppTexts.mobileNumberHint,
                     ),
                     validator: (String? value) {
                       if(value?.trim().isEmpty??true){
-                        return "number can't be empty";
+                        return AppTexts.mobileNumberError;
                       }return null;
                     },
                   ),
@@ -128,11 +130,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: true,
                     controller: _passwordController,
                     decoration: const InputDecoration(
-                      hintText: 'Password',
+                      hintText: AppTexts.passwordHint,
                     ),
                     validator: (String? value) {
                       if(value?.trim().isEmpty??true){
-                        return "Password can't be empty";
+                        return AppTexts.passwordError;
                       }if(value!.length<6){
                         return "password must be at least 6 characters";
                       }return null;
@@ -150,7 +152,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: ElevatedButton(
                       onPressed:_onTapSignup,
                       child: const Text(
-                        "Sign Up",
+                        AppTexts.signUp,
                       ),
                     ),
                   ),
@@ -212,23 +214,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
 
   // build sign in section
-  RichText _buildSignInTextSection() {
-    return RichText(text: TextSpan(
-        text: "Already have an account?",
-        style:Theme.of(context).textTheme.bodySmall,
-        children: [
-          TextSpan(
-            text: "Sign In",
-            style: TextStyle(
-              color: AppColors.primaryColor,
-            ),
-            recognizer: TapGestureRecognizer()..onTap = (){
-              Navigator.pop(context);
-            },
-          ),
-        ]
-    ),
-    );
+  SignInUpSection _buildSignInTextSection() {
+    return SignInUpSection(context: context);
+
   }
 
   // dispose

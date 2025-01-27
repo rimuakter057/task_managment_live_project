@@ -25,7 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
     bool isUserLoggedIn = await AuthController.isUserLoggedIn();
     if (isUserLoggedIn) {
-      Navigator.pushReplacementNamed(context, NavScreen.routeName);
+ /*     Navigator.pushNamedAndRemoveUntil(context, NavScreen.routeName, (_) => false);*/
+    Navigator.pushNamedAndRemoveUntil(context, NavScreen.routeName,(value) => false);
+
     }else{
       Navigator.pushReplacementNamed(context, SignInScreen.routeName);
     }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:task_management_live_project/controllers/auth_controller.dart';
@@ -5,6 +7,8 @@ import 'package:task_management_live_project/view/screens/task_screens/nav_scree
 import '../../../../data/service/network_caller.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/url.dart';
+import '../../../widget/circular_indicator.dart';
+import '../../../widget/snack_bar_message.dart';
 
 class ProfileUpdate extends StatefulWidget {
   const ProfileUpdate({super.key});
@@ -57,13 +61,11 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                 const SizedBox(
                   width: 10,
                 ),
-                Text(
-                  "select photo",
-              /*    _pickedImage != null
-                      ? "no image found"
-                      : _pickedImage!.name,*/
+                Text(_pickedImage == null ? "No Photo Selected" :
+                 _pickedImage!.name,
+
                   maxLines: 1,
-                  style: textTheme.bodySmall?.copyWith(color: AppColors.white),
+                  style: textTheme.bodySmall?.copyWith(color: AppColors.primaryColor),
                 )
               ],
             ),
@@ -145,10 +147,14 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                 const SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(onPressed:_onTapUpdate,
-                    child: const Text("Update")
+                Visibility(
+                  visible:_updateProfileInProgress == false,
+                  replacement: const CircularIndicator(),
+                  child: ElevatedButton(onPressed:_onTapUpdate,
+                      child: const Text("Update")
 
 
+                  ),
                 )
               ],
             ),
@@ -159,21 +165,21 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   Widget _buildPhotoPicker() {
     final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
-      onTap: (){
-        print("error");
-      },
-      // onTap: _pickImage,
+      onTap: _pickImage,
+        // onTap: _pickImage,
       child: Container(
           height: 50,
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: AppColors.primaryColor,
             border: Border.all(color: AppColors.black.withOpacity(.05)),
           ),
-          child: Text(
-           "photo",
-            style: textTheme.bodySmall?.copyWith(color: AppColors.white),
+          child: Center(
+            child: Text(
+             "photo",
+              style: textTheme.bodySmall?.copyWith(color: AppColors.white),
+            ),
           )
       ),
     );
@@ -183,6 +189,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 Future<void> _onTapUpdate()async{
 
     if(_formKey.currentState!.validate()){
+      _updateProfile();
       debugPrint("success");
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NavScreen()), (_)=>false);
     }else{
@@ -192,7 +199,6 @@ Future<void> _onTapUpdate()async{
 }
 
 //update profile
-
   Future<void> _updateProfile() async {
     _updateProfileInProgress = true;
     setState(() {});
@@ -202,8 +208,15 @@ Future<void> _onTapUpdate()async{
       "lastName": _lastNameController.text.trim(),
       "mobile": _mobileNumberController.text.trim(),
     };
+    if(_pickedImage!=null){
+      List<int> imageBytes = await _pickedImage!.readAsBytes();
+ requestBody['photo']=base64Encode(imageBytes);
+
+
+    }
     if (_passwordController.text.isNotEmpty) {
-      requestBody['password'] = _passwordController.text;
+      requestBody['password'] = _passwordController.text;}
+
       final NetworkResponse response = await NetworkCaller.postRequest(
           url: Urls.updateProfile, body: requestBody);
       _updateProfileInProgress = false;
@@ -211,28 +224,32 @@ Future<void> _onTapUpdate()async{
       if (response.isSuccess) {
         _passwordController.clear();
       } else {
-       print("error");
+        showSnackBar(response.errorMessage, context);
       }
-    }}
+  }
 
-
-/*  Future<void> _pickImage() async {
+// pick image
+  Future<void> _pickImage() async {
     ImagePicker picker = ImagePicker();
     XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       _pickedImage = image;
       setState(() {});
     }
-    //dispose
-    @override
-    void dispose() {
-      // TODO: implement dispose
-      super.dispose();
-      _emailController.dispose();
-      _passwordController.dispose();
-      _firstNameController.dispose();
-      _lastNameController.dispose();
-      _mobileNumberController.dispose();
-    }
+  }
+
+
+/*  //dispose
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _mobileNumberController.dispose();
   }*/
+
 }
+
