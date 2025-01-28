@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_management_live_project/utils/colors.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/signIn_screen/signIn_screen.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../widget/app_logo.dart';
@@ -19,35 +20,33 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
- nextScreen();
+    nextScreen();
   }
+
   Future<void> nextScreen() async {
     await Future.delayed(const Duration(seconds: 3));
     bool isUserLoggedIn = await AuthController.isUserLoggedIn();
     if (isUserLoggedIn) {
- /*     Navigator.pushNamedAndRemoveUntil(context, NavScreen.routeName, (_) => false);*/
-    Navigator.pushNamedAndRemoveUntil(context, NavScreen.routeName,(value) => false);
-
-    }else{
+      Navigator.pushNamedAndRemoveUntil(
+          context, NavScreen.routeName, (value) => false);
+    } else {
       Navigator.pushReplacementNamed(context, SignInScreen.routeName);
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:ScreenBackground(
-        child:Center(
-          child: Text("TASK MANAGEMENT"),
-        ) ,
-        
-      )
-    );
+        body: ScreenBackground(
+      child: Center(
+        child: Text(
+          "TASK MANAGEMENT",
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(color: AppColors.primaryColor),
+        ),
+      ),
+    ));
   }
 }
-
-
-
-

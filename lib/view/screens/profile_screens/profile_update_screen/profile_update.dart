@@ -239,17 +239,5 @@ Future<void> _onTapUpdate()async{
   }
 
 
-/*  //dispose
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _mobileNumberController.dispose();
-  }*/
-
 }
 

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:task_management_live_project/view/screens/on_boarding_screens/signIn_screen/signIn_screen.dart';
-
 import '../../app.dart';
 import '../../controllers/auth_controller.dart';
 
@@ -62,7 +61,7 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
           'token':AuthController.accessToken??''},
         body:jsonEncode(body) );
     if (response.statusCode==200){
-      // ata print hoy
+
       debugPrint("status code = ${response.statusCode}");
       final decodedData= jsonDecode(response.body);
       debugPrint(decodedData.toString());
@@ -80,7 +79,7 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
           isSuccess:false,
           errorMessage: "bad request");
     } else if (response.statusCode == 401) {
-   //   await _logout();
+      await _logout();
       return NetworkResponse(
           isSuccess: false, statusCode: response.statusCode);
     }
@@ -88,7 +87,6 @@ static  Future <NetworkResponse> postRequest({required Map<String,dynamic> body,
       return NetworkResponse(
         isSuccess: false,
         statusCode: response.statusCode,
-
       );
     }
     }catch(e){

@@ -20,11 +20,11 @@ class NavScreen extends StatefulWidget {
 class _NavScreenState extends State<NavScreen> {
   int _selectedIndex = 0;
 
-  List <Widget>_screens=[
-    NewTaskListScreen(),
-    TaskCompletedListScreen(),
-    TaskCancelListScreen(),
-    TaskProgressListScreen(),
+  final List <Widget>_screens=[
+    const NewTaskListScreen(),
+    const TaskCompletedListScreen(),
+    const TaskCancelListScreen(),
+    const TaskProgressListScreen(),
 
   ];
   @override

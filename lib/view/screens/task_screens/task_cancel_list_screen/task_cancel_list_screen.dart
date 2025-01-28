@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:task_management_live_project/utils/app_text.dart';
 
 import '../../../../data/models/task_list/task_list_status_json_model.dart';
 import '../../../../data/models/task_list/task_list_status_model.dart';
@@ -118,7 +119,7 @@ class _TaskCancelListScreenState extends State<TaskCancelListScreen> {
                         context); // Close the dialog without saving
                   },
                   child: const Text(
-                    'Cancel',
+                    AppTexts.cancel,
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
@@ -129,16 +130,15 @@ class _TaskCancelListScreenState extends State<TaskCancelListScreen> {
                       // Update the global value and close the dialog
                       _selectedValue = selectedValue;
                     }
-                    print("alert dialog done");
                     _updateTaskStatus(
                         newListStatusModel!.taskList![index].sId ??
                             '',
                         selectedValue ?? '');
                     Navigator.pop(context); // Close the dialog
-                    print("close dialog done");
+                   debugPrint("close dialog done");
                   },
                   child: const Text(
-                    'Update',
+                    AppTexts.update,
                     style: TextStyle(color: Colors.blue),
                   ),
                 ),

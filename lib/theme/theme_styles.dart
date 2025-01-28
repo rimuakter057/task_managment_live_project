@@ -49,7 +49,7 @@ inputDecorationTheme: InputDecorationTheme(
         fontSize: 14,
         color: AppColors.black
     ),
-    titleSmall: TextStyle(
+    titleSmall: const TextStyle(
       color: Colors.grey,
       fontWeight: FontWeight.w500,
     ),
@@ -63,7 +63,7 @@ inputDecorationTheme: InputDecorationTheme(
 
         padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 16),
         foregroundColor: AppColors.white,
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
             fontSize: 20,
             fontFamily: 'poppins',
             fontWeight: FontWeight.w500

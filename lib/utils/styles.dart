@@ -54,7 +54,7 @@ fixedSize:const Size.fromWidth(double .maxFinite),
 
   padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 16),
   foregroundColor: AppColors.white,
-  textStyle: TextStyle(
+  textStyle: const TextStyle(
     fontSize: 20,
     fontFamily: 'poppins',
     fontWeight: FontWeight.w500

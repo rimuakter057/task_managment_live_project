@@ -38,10 +38,18 @@ class _NewTaskListScreenState extends State<NewTaskListScreen> {
     // TODO: implement initState
     super.initState();
     _getTaskStatus();
-    _getSummaryStatus();
-    _getSummaryNewList();
+    _fetchAllDataSequence();
+  }//
 
+  Future<void> _fetchAllDataSequence() async {
+    try {
+      await  _getSummaryStatus();
+      await _getSummaryNewList();
+    } catch (e) {
+      showSnackBar('Error fetching tasks: $e', context);
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
