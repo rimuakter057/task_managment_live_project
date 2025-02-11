@@ -158,6 +158,7 @@ class _SignInScreenState extends State<SignInScreen> {
  UserModel userModel= UserModel.fromJson(response.responseData!['data']);
 await AuthController.saveUserData(token, userModel);
 
+
         Navigator.pushNamedAndRemoveUntil(context,  NavScreen.routeName,  (_) => false);
 
 _clearTextField();

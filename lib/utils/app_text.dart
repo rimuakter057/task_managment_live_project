@@ -64,11 +64,4 @@ class AppTexts{
   static const String success = "success";
   static const String failed = "failed";
   static const String invalidMailPassword = "Invalid email or password";
-
-
-
-
-
-
-
 }
